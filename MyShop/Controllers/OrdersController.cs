@@ -47,7 +47,7 @@ namespace MyShop.Controllers
         public async Task<ActionResult> Post([FromBody] AddOrderDTO order)
         {
             Order newOrder = await orderService.AddOrder(_mapper.Map<AddOrderDTO, Order>(order));
-            return newOrder != null ? Ok( _mapper.Map<Order, OrderDTO>(newOrder)) : Unauthorized();
+            return newOrder != null ? Ok( _mapper.Map<Order, OrderDTO>(newOrder)) : Unauthorized();//?? why Unauthorized
         }
 
     }
