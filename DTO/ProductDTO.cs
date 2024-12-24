@@ -2,9 +2,5 @@
 
 namespace DTO
 {
-    public class ProductDTO( string? ProductName , decimal? Price , string? Description , string CategoryCategoryName)
-
-    {
-
-    }
+    public record ProductDTO( string? ProductName , decimal? Price , string? Description  ,string? CategoryCategoryName, string? Image);
 }

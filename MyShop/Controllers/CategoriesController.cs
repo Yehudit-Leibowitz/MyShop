@@ -28,9 +28,10 @@ namespace MyShop.Controllers
         public async Task<ActionResult<List<CategoryDTO>>> Get()
         {
             List<Category> categories = await categoryService.GetAllCategory();
-            return _mapper.Map<List<Category>, List<CategoryDTO>>(categories);
+             return Ok(_mapper.Map<List<Category>, List<CategoryDTO>>(categories));
+           
         }
 
-     
+
     }
 }

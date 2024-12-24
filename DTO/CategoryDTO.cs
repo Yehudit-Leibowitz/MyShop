@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class CategoryDTO( string? CategoryName )
-    {
-    }
+    public record CategoryDTO( string? CategoryName );
 }

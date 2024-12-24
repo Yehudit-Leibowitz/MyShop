@@ -25,14 +25,15 @@ namespace MyShop.Controllers
 
 
 
-        // GET api/<UsersController>/5
+        //GET api/<UsersController>/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<GetUserDTO>> Get(int id) { 
+        public async Task<ActionResult<GetUserDTO>> Get(int id)
+        {
 
-        User foundUser =  await userService.GetUserById(id);
-        if (foundUser == null)
-            return  NoContent();
-        else
+            User foundUser = await userService.GetUserById(id);
+            if (foundUser == null)
+                return NoContent();
+            else
 
                 return Ok(_mapper.Map<User, GetUserDTO>(foundUser));
 
@@ -42,35 +43,35 @@ namespace MyShop.Controllers
         [HttpPost]
         public async Task<ActionResult> Register([FromBody] RegisterUserDTO user)
         {
-            User newUser =  await userService.AddUser(_mapper.Map<RegisterUserDTO, User>(user));
-    return newUser != null ? Ok((_mapper.Map<User, GetUserDTO>(newUser))) : Unauthorized();
+            User newUser = await userService.AddUser(_mapper.Map<RegisterUserDTO, User>(user));
+            return newUser != null ? Ok((_mapper.Map<User, GetUserDTO>(newUser))) : Unauthorized();
         }
 
         [HttpPost("password")]
         public async Task<IActionResult> CheckPassword([FromBody] string password)
         {
 
-          int Score = userService.CheckPassword(password);
-     
-          return  (Score < 3)?
-                 BadRequest(Score):
-            Ok(Score);
+            int Score = userService.CheckPassword(password);
+
+            return (Score < 3) ?
+                   BadRequest(Score) :
+              Ok(Score);
         }
 
 
         [HttpPost("login")]
         public async Task<ActionResult<User>> LogIn([FromQuery] string userName, string password)
         {
-            User userLogin =await userService.LogIn(userName, password);
+            User userLogin = await userService.LogIn(userName, password);
             if (userLogin == null)
                 return NoContent();
             else
-            return Ok(userLogin);
-         
-           
+                return Ok(userLogin);
+
+
         }
 
-       
+
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
         public async Task Put(int id, [FromBody] User userToUpdate)
@@ -78,7 +79,7 @@ namespace MyShop.Controllers
             await userService.UpdateUser(id, userToUpdate);
         }
 
-    
+
 
     }
 }

@@ -23,8 +23,7 @@ namespace Repository
 
         public async Task<List<Category>> GetAllCategory()
         {
-            return await _apiDbToCodeContext.Categories.Include(c => c.Products).ToListAsync();
- 
+           return await _apiDbToCodeContext.Categories.ToListAsync();
 
         }
     }

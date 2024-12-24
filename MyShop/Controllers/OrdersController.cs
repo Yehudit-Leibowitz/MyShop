@@ -28,12 +28,13 @@ namespace MyShop.Controllers
         {
 
             Order foundOrder = await orderService.GetOrderById(id);
-           
+
             if (foundOrder == null)
                 return NoContent();
             else
 
-                return Ok( _mapper.Map<Order, OrderDTO>(foundOrder));
+                return Ok(_mapper.Map<Order, OrderDTO>(foundOrder));
+            return Ok(foundOrder);
 
         
 
@@ -43,12 +44,12 @@ namespace MyShop.Controllers
 
         // POST api/<OrdersController>
 
-        [HttpPost]
-        public async Task<ActionResult> Post([FromBody] AddOrderDTO order)
-        {
-            Order newOrder = await orderService.AddOrder(_mapper.Map<AddOrderDTO, Order>(order));
-            return newOrder != null ? Ok( _mapper.Map<Order, OrderDTO>(newOrder)) : Unauthorized();
-        }
+        //[HttpPost]
+        //public async Task<ActionResult> Post([FromBody] AddOrderDTO order)
+        //{
+        //    Order newOrder = await orderService.AddOrder(_mapper.Map<AddOrderDTO, Order>(order));
+        //    return newOrder != null ? Ok( _mapper.Map<Order, OrderDTO>(newOrder)) : Unauthorized();
+        //}
 
     }
 }

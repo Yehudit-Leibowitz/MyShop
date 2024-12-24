@@ -22,11 +22,18 @@ namespace Repository
 
 
 
-        public async Task<List<Product>> GetAllProduct()
+        public async Task<List<Product>> GetProducts(string? desc, int? minPrice, int? maxPrice, int?[] categoryIds)
         {
-            return await _apiDbToCodeContext.Products.ToListAsync();
 
-
+            var query = _apiDbToCodeContext.Products.Where(Product =>
+            (desc == null ? (true) : (Product.Description.Contains(desc)))
+        && ((minPrice == null) ? (true) : (Product.Price >= minPrice))
+        && ((maxPrice == null) ? (true) : (Product.Price <= maxPrice))
+        && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(Product.CategoryId))))
+        .OrderBy(Product => Product.Price).Include(p => p.Category);
+            Console.WriteLine(query.ToQueryString());
+            List<Product> products = await query.ToListAsync();
+            return products;
         }
 
 

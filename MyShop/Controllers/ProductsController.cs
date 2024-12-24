@@ -4,6 +4,7 @@ using service;
 using Entity;
 using AutoMapper;
 using DTO;
+using System.Collections.Generic;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MyShop.Controllers
@@ -24,17 +25,20 @@ namespace MyShop.Controllers
 
 
 
-        // GET: api/<ProductsController>
+        //GET: api/<ProductsController>
         [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>>Get()
+        public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
         {
-            List<Product> products = await poductService.GetAllProduct();
-            return _mapper.Map<List<Product>, List<ProductDTO>>(products); ;
-           
+            List<Product> products = await poductService.GetProducts(desc, minPrice, maxPrice, categoryIds);
+
+            return _mapper.Map<List<Product>, List<ProductDTO>>(products);
+
+
+
         }
 
-     
 
-    
+
+
     }
 }
