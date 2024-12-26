@@ -31,7 +31,7 @@ namespace Repository
 
         public async Task<User> AddUser(User user)
         {
-            await _apiDbToCodeContext.Users.AddAsync(user);
+         await   _apiDbToCodeContext.Users.AddAsync(user);
             await _apiDbToCodeContext.SaveChangesAsync();
 
             return user;
