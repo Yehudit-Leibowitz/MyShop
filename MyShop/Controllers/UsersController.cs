@@ -70,10 +70,10 @@ namespace MyShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] User userToUpdate)
+        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] RegisterUserDTO userToUpdate)
         {
             
-            User updatedUser = await userService.UpdateUser(id,( userToUpdate));
+            User updatedUser = await userService.UpdateUser(id,(_mapper.Map<RegisterUserDTO, User>(userToUpdate)));
             return _mapper.Map<User,GetUserDTO>(updatedUser) != null ? Ok(updatedUser) : BadRequest();
         }
 
