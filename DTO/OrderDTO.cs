@@ -7,8 +7,8 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public class OrderDTO(DateTime? OrderDate, int? OrderSum, string UserUserName);
+    public record OrderDTO(DateTime? OrderDate, int? OrderSum, string UserUserName, ICollection<OrderItem> OrderItems);
 
-    public class AddOrderDTO(DateTime? OrderDate, int? OrderSum, int UserId);
+    public record AddOrderDTO(DateTime? OrderDate, int? OrderSum, int UserId, ICollection<OrderItem> OrderItems);
 
 }

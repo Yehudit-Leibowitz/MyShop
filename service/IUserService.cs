@@ -8,6 +8,6 @@ namespace service
         int CheckPassword(string password);
         Task<User> GetUserById(int id);
         Task<User> LogIn(string userName, string password);
-        Task UpdateUser(int id, User userToUpdate);
+        Task<User> UpdateUser(int id, User userToUpdate);
     }
 }

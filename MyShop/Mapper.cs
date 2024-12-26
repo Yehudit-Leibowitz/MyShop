@@ -10,6 +10,7 @@ namespace MyShop
         public Mapper()
         {
             CreateMap<User, GetUserDTO>();
+            CreateMap< GetUserDTO, User>();
             CreateMap<RegisterUserDTO, User>();
             CreateMap<Category, CategoryDTO>();
             CreateMap<Order, OrderDTO>();
