@@ -59,7 +59,7 @@ namespace MyShop.Controllers
         public async Task<ActionResult<GetUserDTO>> LogIn([FromQuery] string userName, string password)
         {
             User userLogin = await userService.LogIn(userName, password);  
-           
+           //
             return (userLogin == null)?
                  NoContent():
            Ok(_mapper.Map<User, GetUserDTO>(userLogin));
