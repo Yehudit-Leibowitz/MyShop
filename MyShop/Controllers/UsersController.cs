@@ -31,11 +31,7 @@ namespace MyShop.Controllers
         {
 
             User foundUser = await userService.GetUserById(id);
-            if (foundUser == null)
-                return NoContent();
-            else
-
-                return Ok(_mapper.Map<User, GetUserDTO>(foundUser));
+            return foundUser == null? NoContent(): Ok(_mapper.Map<User, GetUserDTO>(foundUser));
 
         }
 
@@ -60,13 +56,13 @@ namespace MyShop.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<User>> LogIn([FromQuery] string userName, string password)
+        public async Task<ActionResult<GetUserDTO>> LogIn([FromQuery] string userName, string password)
         {
-            User userLogin = await userService.LogIn(userName, password);
-            if (userLogin == null)
-                return NoContent();
-            else
-                return Ok(userLogin);
+            User userLogin = await userService.LogIn(userName, password);  
+            //vghjbjn
+            return (userLogin == null)?
+                 NoContent():
+           Ok(_mapper.Map<User, GetUserDTO>(userLogin));
 
 
         }
@@ -74,9 +70,10 @@ namespace MyShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task Put(int id, [FromBody] User userToUpdate)
+        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] GetUserDTO userToUpdate)
         {
-            await userService.UpdateUser(id, userToUpdate);
+            GetUserDTO updatedUser = await userService.UpdateUser(id, _mapper.Map<GetUserDTO, User>( userToUpdate));
+            return updatedUser != null ? Ok(updatedUser): 
         }
 
 

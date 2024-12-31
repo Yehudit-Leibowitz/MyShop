@@ -1,4 +1,5 @@
 ﻿using Entity;
+using Microsoft.AspNetCore.Mvc;
 using Repository;
 using System.Text.Json;
 
@@ -31,14 +32,15 @@ namespace service
 
 
         }
-        public async Task UpdateUser(int id, User userToUpdate)
+        public async Task<ActionResult<User>> UpdateUser(int id, User userToUpdate)
         {
-            if (CheckPassword(userToUpdate.Password) > 2)
-                await userRepository.UpdateUser(id, userToUpdate);
+            return (CheckPassword(userToUpdate.Password) > 2) ?
+                await userRepository.UpdateUser(id, userToUpdate) : null;
 
 
         }
-    
+
+
         public async Task<User> LogIn(string userName, string password)
         {
             return await userRepository.LogIn(userName, password);
