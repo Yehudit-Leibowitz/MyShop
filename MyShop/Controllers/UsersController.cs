@@ -2,7 +2,7 @@
 using service;
 using System.Text.Json;
 using Entity;
-using service;
+
 using AutoMapper;
 using DTO;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -37,10 +37,11 @@ namespace MyShop.Controllers
 
         // POST api/<UsersController>
         [HttpPost]
-        public async Task<ActionResult> Register([FromBody] RegisterUserDTO user)
+        public async Task<ActionResult<GetUserDTO>> Register([FromBody] RegisterUserDTO user)
         {
             User newUser = await userService.AddUser(_mapper.Map<RegisterUserDTO, User>(user));
-            return newUser != null ? Ok((_mapper.Map<User, GetUserDTO>(newUser))) : Unauthorized();
+            return newUser != null ? Ok(_mapper.Map<User, GetUserDTO>(newUser)) : Unauthorized();
+
         }
 
         [HttpPost("password")]
@@ -58,8 +59,7 @@ namespace MyShop.Controllers
         [HttpPost("login")]
         public async Task<ActionResult<GetUserDTO>> LogIn([FromQuery] string userName, string password)
         {
-            User userLogin = await userService.LogIn(userName, password);  
-           //
+            User userLogin = await userService.LogIn(userName, password);
             return (userLogin == null)?
                  NoContent():
            Ok(_mapper.Map<User, GetUserDTO>(userLogin));
@@ -70,10 +70,11 @@ namespace MyShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] GetUserDTO userToUpdate)
+        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] RegisterUserDTO userToUpdate)
         {
-            GetUserDTO updatedUser = await userService.UpdateUser(id, _mapper.Map<GetUserDTO, User>( userToUpdate));
-            return updatedUser != null ? Ok(updatedUser): 
+            
+            User updatedUser = await userService.UpdateUser(id,(_mapper.Map<RegisterUserDTO, User>(userToUpdate)));
+            return _mapper.Map<User,GetUserDTO>(updatedUser) != null ? Ok(updatedUser) : BadRequest();
         }
 
 

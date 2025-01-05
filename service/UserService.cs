@@ -22,17 +22,11 @@ namespace service
 
         public async Task<User> AddUser(User user)
         {
-            if (CheckPassword(user.Password) > 2)
-            {
-                return await userRepository.AddUser(user);
-            }
-            else
-
-                return null;
+            return (CheckPassword(user.Password) > 2)?  await userRepository.AddUser(user): null;
 
 
         }
-        public async Task<ActionResult<User>> UpdateUser(int id, User userToUpdate)
+        public async Task<User> UpdateUser(int id, User userToUpdate)
         {
             return (CheckPassword(userToUpdate.Password) > 2) ?
                 await userRepository.UpdateUser(id, userToUpdate) : null;
