@@ -29,7 +29,7 @@ namespace MyShop.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetUserDTO>> Get(int id)
         {
-
+            // problem : doesnt shoes all prprties of orderitem 
             User foundUser = await userService.GetUserById(id);
             return foundUser == null? NoContent(): Ok(_mapper.Map<User, GetUserDTO>(foundUser));
 

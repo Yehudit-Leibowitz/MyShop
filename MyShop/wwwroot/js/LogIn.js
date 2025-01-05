@@ -130,7 +130,10 @@ const Login = async () => {
 
         const dataPost = await responsePost.json();
         sessionStorage.setItem("user", JSON.stringify(dataPost));
-        window.location.href = "Update.html";
+        //window.location.href = "Update.html";
+      //  window.location.href = "../html/Update.html";
+        window.location.href = "../html/Products.html";
+
 
     } catch (error) {
         alert(error);
