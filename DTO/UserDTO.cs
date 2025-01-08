@@ -9,8 +9,9 @@ using System.Threading.Tasks;
 namespace DTO
 
 {
-    public class GetUserDTO(string UserName, string? FirstName, string? LastName, ICollection<Order> Orders);
-    public class RegisterUserDTO(string UserName, string? FirstName, string? LastName, string Password);
-
+    public record GetUserDTO(string UserName, string? FirstName, string? LastName, ICollection<OrderDTO> Orders);
+    public record RegisterUserDTO(string UserName, string? FirstName, string? LastName, string Password);
+    
 
 }
+

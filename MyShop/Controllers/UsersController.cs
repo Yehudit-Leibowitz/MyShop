@@ -29,7 +29,7 @@ namespace MyShop.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<GetUserDTO>> Get(int id)
         {
-
+            // problem : doesnt shoes all prprties of orderitem 
             User foundUser = await userService.GetUserById(id);
             return foundUser == null? NoContent(): Ok(_mapper.Map<User, GetUserDTO>(foundUser));
 
@@ -70,11 +70,12 @@ namespace MyShop.Controllers
 
         // PUT api/<UsersController>/5
         [HttpPut("{id}")]
-        public async Task<ActionResult<GetUserDTO>>Put(int id, [FromBody] RegisterUserDTO userToUpdate)
+        public async Task<ActionResult<RegisterUserDTO>>Put(int id, [FromBody] RegisterUserDTO userToUpdate)
         {
             
             User updatedUser = await userService.UpdateUser(id,(_mapper.Map<RegisterUserDTO, User>(userToUpdate)));
-            return _mapper.Map<User,GetUserDTO>(updatedUser) != null ? Ok(updatedUser) : BadRequest();
+            RegisterUserDTO userToReturn = _mapper.Map<User, RegisterUserDTO>(updatedUser);
+            return userToReturn != null ? Ok(userToReturn) : BadRequest();
         }
 
 

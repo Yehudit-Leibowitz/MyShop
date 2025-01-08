@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NLog.Web;
 using Repository;
 using service;
 
@@ -22,10 +23,14 @@ builder.Services.AddScoped<IProductService, ProductService>();
 
 builder.Services.AddDbContext<ApiDbToCodeContext>(options => options.UseSqlServer(
     "Server=SRV2\\PUPILS;Database=api_db_to_code;Trusted_Connection=True;TrustServerCertificate=True"));
+  //  "Server=DESKTOP-58UFOBM;Database=ApiDbToCode;User Id=sa;Password=9553595535;Trusted_Connection=True;TrustServerCertificate=True"));
 
+
+builder.Host.UseNLog();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
