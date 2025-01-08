@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace DTO
 
 {
-    public record GetUserDTO(string UserName, string? FirstName, string? LastName, ICollection<OrderDTO> Orders);
+    public record GetUserDTO(int UserId ,string UserName, string? FirstName, string? LastName, ICollection<OrderDTO> Orders);
     public record RegisterUserDTO(string UserName, string? FirstName, string? LastName, string Password);
     
 

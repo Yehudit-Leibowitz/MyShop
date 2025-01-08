@@ -38,11 +38,12 @@ const colorMater = (responseData) => {
 const editValueOfUpdatePage = () => {
     const userName = document.querySelector("#userNameUpdate")
     const password = document.querySelector("#passwordUpdate")
+    
     const firstName = document.querySelector("#firstNameUpdate")
     const lastName = document.querySelector("#lastNameUpdate")
     const currentUser = JSON.parse(sessionStorage.getItem("user"))
     userName.value = currentUser.userName
-    password.value = currentUser.password
+
     firstName.value = currentUser.firstName
     lastName.value = currentUser.lastName
     checkPassword();
@@ -67,6 +68,8 @@ const updateUser = async () => {
         alert("Password is too weak")
     else {
         try {
+            console.log(currentUser.orders)
+            console.log(currentUser.userId)
             const responseput = await fetch(`https://localhost:44379/api/Users/${currentUser.userId}`, {
                 method: "PUT",
                 headers: {
@@ -74,6 +77,8 @@ const updateUser = async () => {
                 },
                 body: JSON.stringify(updateUser)
             })
+            
+
             if (!responseput.ok)
                 throw new Error(`HTTP error! status ${responsePost.status}`)
 
@@ -84,6 +89,7 @@ const updateUser = async () => {
             }
         }
         catch (error) {
+            
             alert("Something went wrong, try again...\nThe error:" + error)
         }
     }
