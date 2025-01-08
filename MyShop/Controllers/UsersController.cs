@@ -48,6 +48,8 @@ namespace MyShop.Controllers
         public async Task<IActionResult> CheckPassword([FromBody] string password)
         {
 
+
+
             int Score = userService.CheckPassword(password);
 
             return (Score < 3) ?

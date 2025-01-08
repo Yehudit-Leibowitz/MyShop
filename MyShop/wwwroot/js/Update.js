@@ -67,6 +67,8 @@ const updateUser = async () => {
     if (strengthMeter.value < 3)
         alert("Password is too weak")
     else {
+
+
         try {
             console.log(currentUser.orders)
             console.log(currentUser.userId)
