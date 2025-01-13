@@ -6,5 +6,5 @@ using System.Threading.Tasks;
 
 namespace DTO
 {
-    public record CategoryDTO( string? CategoryName );
+    public record CategoryDTO( string? CategoryName , int CategoryId);
 }

@@ -2,7 +2,6 @@
 using service;
 using System.Text.Json;
 using Entity;
-
 using AutoMapper;
 using DTO;
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -31,7 +30,7 @@ namespace MyShop.Controllers
         {
             // problem : doesnt shoes all prprties of orderitem 
             User foundUser = await userService.GetUserById(id);
-            return foundUser == null? NoContent(): Ok(_mapper.Map<User, GetUserDTO>(foundUser));
+            return foundUser == null? NoContent(): Ok(_mapper.Map<User, GetUserDTO>(foundUser)); 
 
         }
 

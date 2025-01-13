@@ -26,7 +26,7 @@ namespace Repository
         {
 
             var query = _apiDbToCodeContext.Products.Where(Product =>
-            (desc == null ? (true) : (Product.Description.Contains(desc)))
+            (desc == null ? (true) : (Product.ProductName.Contains(desc)))
         && ((minPrice == null) ? (true) : (Product.Price >= minPrice))
         && ((maxPrice == null) ? (true) : (Product.Price <= maxPrice))
         && ((categoryIds.Length == 0) ? (true) : (categoryIds.Contains(Product.CategoryId))))
