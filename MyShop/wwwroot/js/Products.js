@@ -90,7 +90,7 @@ const addToCart = (product) => {
     }
     else {
         alert("please sign")
-        window.location.href = "../html/LogIn.html"
+        window.location.href = "../LogIn.html"
     }
 
 }
