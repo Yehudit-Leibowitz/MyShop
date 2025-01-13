@@ -23,6 +23,10 @@ namespace service
             return await productRepository.GetProducts(desc, minPrice, maxPrice, categoryIds);
         }
 
+        public async Task<Product> GetProductbyId(int id)
+        {
+            return await productRepository.GetProductById(id);
+        }
     }
 }
 

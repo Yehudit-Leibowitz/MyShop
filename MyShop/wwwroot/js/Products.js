@@ -83,7 +83,7 @@ const addToCart = (product) => {
     if (sessionStorage.getItem("user")) {
 
         let productsInbasket = JSON.parse(sessionStorage.getItem("basket"))
-        productsInbasket.push(product.productID)
+        productsInbasket.push(product.productId)
         sessionStorage.setItem("basket", JSON.stringify(productsInbasket))
         document.querySelector("#ItemsCountText").innerHTML = productsInbasket.length
         alert("added")

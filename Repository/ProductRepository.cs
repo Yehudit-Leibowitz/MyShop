@@ -37,6 +37,10 @@ namespace Repository
         }
 
 
+        public async Task<Product> GetProductById(int id)
+        {
+            return await _apiDbToCodeContext.Products.FirstOrDefaultAsync(Product => Product.ProductId == id);
+
+        }
     }
-}
 

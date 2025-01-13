@@ -26,18 +26,28 @@ namespace MyShop.Controllers
 
 
         //GET: api/<ProductsController>
-        [HttpGet]
-        public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
+        //[HttpGet]
+        //public async Task<ActionResult<List<ProductDTO>>> Get([FromQuery] string? desc, [FromQuery] int? minPrice, [FromQuery] int? maxPrice, [FromQuery] int?[] categoryIds)
+        //{
+        //    List<Product> products = await poductService.GetProducts(desc, minPrice, maxPrice, categoryIds);
+
+        //    return _mapper.Map<List<Product>, List<ProductDTO>>(products);
+
+
+
+        //}
+
+        //GET api/<ProductController>/5
+        [HttpGet("{id}")]
+        public async Task<ActionResult<ProductDTO>> Get(int id)
+
         {
-            List<Product> products = await poductService.GetProducts(desc, minPrice, maxPrice, categoryIds);
 
-            return _mapper.Map<List<Product>, List<ProductDTO>>(products);
-
-
+            Product product = await poductService.GetProductbyId(id);
+ return (product == null) ?
+                 NoContent() : Ok(_mapper.Map<Product, ProductDTO>(product));
 
         }
-
-
 
 
     }
