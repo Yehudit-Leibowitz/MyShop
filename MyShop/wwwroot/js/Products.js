@@ -18,7 +18,7 @@ const getDetailsFromForm = async () => {
     }
     return search
 }
-const filterProducts = async () => {
+const filterProducts = async () => {//why do you need the filter func? call draw.
     drawProducts()
 }
 const drawProducts = async () => {
@@ -35,7 +35,7 @@ const drawProducts = async () => {
         if (maxPrice)
             url += `&maxPrice=${maxPrice}`
         if (categoriesIdFromSession != []) {
-            for (let i = 0; i < categoriesIdFromSession.length; i++) {
+            for (let i = 0; i < categoriesIdFromSession.length; i++) {//map or foreach is nicer
                 url += `&categoryIds=${categoriesIdFromSession[i]}`
             }
         }
@@ -63,7 +63,7 @@ const drawProducts = async () => {
     }
 }
 const showAllProducts = async (products) => {
-    for (let i = 0; i < products.length; i++) {
+    for (let i = 0; i < products.length; i++) {//foreach is nicer
         showOneProduct(products[i]);
     }
 }
@@ -100,7 +100,7 @@ const addToCart = (product) => {
 }
 
 
-const showAllCategories = async () => {
+const showAllCategories = async () => {//divide the get to a different func.
 
     const ReceivedCategories = await fetch('https://localhost:44379/api/Categories', {
         method: 'GET',
@@ -110,7 +110,7 @@ const showAllCategories = async () => {
 
     });
     allCategories = await ReceivedCategories.json();
-    for (let i = 0; i < allCategories.length; i++) {
+    for (let i = 0; i < allCategories.length; i++) {//forEach
         showOneCategory(allCategories[i]);
 
     }
