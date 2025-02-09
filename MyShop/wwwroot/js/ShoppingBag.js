@@ -12,7 +12,7 @@ const DrawBacket = async () => {
   
     let products = JSON.parse(sessionStorage.getItem("basket"))
 
-    for (let i = 0; i < products.length; i++) 
+    for (let i = 0; i < products.length; i++) //forEach
         await showProductBasket(products[i])
    
 }
@@ -52,7 +52,7 @@ const showOneProduct = async (product) => {
 const deleteItem = (product) => {
     products = JSON.parse(sessionStorage.getItem("basket"))
     let j = 0
-    for (j = 0; j < products.length; j++) {
+    for (j = 0; j < products.length; j++) {//use indexOf instead.
 
         if (products[j] == product.productId) {
             break;
@@ -68,6 +68,7 @@ const detials = () => {
     console.log(UserId)
     let orderItems1 = JSON.parse(sessionStorage.getItem("basket"))
     const OrderItems = []
+    //OrderItems= orderItems1.map(t => return  { productId: t, qantity: 1 }) is the correct way to use map.
     orderItems1.map(t => {
         let object = { productId:t ,qantity: 1 }
 

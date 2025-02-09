@@ -42,7 +42,7 @@ namespace MyShop.Controllers
         public async Task<ActionResult<GetUserDTO>> Register([FromBody] RegisterUserDTO user)
         {
             User newUser = await userService.AddUser(_mapper.Map<RegisterUserDTO, User>(user));
-            return newUser != null ? Ok(_mapper.Map<User, GetUserDTO>(newUser)) : Unauthorized();
+            return newUser != null ? Ok(_mapper.Map<User, GetUserDTO>(newUser)) : Unauthorized();//why Unauthorized? BadRequest.
 
         }
 
