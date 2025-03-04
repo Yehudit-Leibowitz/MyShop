@@ -31,21 +31,13 @@ namespace MyShop.Controllers
 
             return (foundOrder == null)?
                  NoContent(): Ok(_mapper.Map<Order, OrderDTO>(foundOrder));
-            
-
-        
-
-
-
         }
-
-        // POST api/<OrdersController>
 
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] AddOrderDTO order)
         {
             Order newOrder = await orderService.AddOrder(_mapper.Map<AddOrderDTO, Order>(order));
-            return newOrder != null ? Ok() : Unauthorized();
+            return newOrder != null ? Ok(newOrder) : Unauthorized();
         }
 
     }

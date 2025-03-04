@@ -1,19 +1,20 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <script src="./js/Products.js"></script>
-    <link href="./css/Products.css" rel="stylesheet" />
+    <script src="../js/Products.js"></script>
+   
+    <link href="../css/Products.css" rel="stylesheet" />
     <meta charset="utf-8" />
     <title></title>
     <template id="temp-card">
         <div class="card">
             <div class="img-w">
-                <img src="1.jpg" alt="" style="width:100%">
+                <img src="tmp.jpg" alt="" style="width:100%">
             </div>
             <h1></h1>
             <p class="price"></p>
             <p class="description"></p>
-            <p><button>Add To Cart</button></p>
+            <p><button>Add to Cart</button></p>
         </div>
     </template>
 
@@ -36,14 +37,18 @@
             <section class="QuickLinks">
                 <ul>
                     <li class="" data-section="myAccount">
-                        <a href="#" title="account details" onclick="TrackLinkID(this);" accesskey="h">My Account</a>
+                        <a href="./Update.html">My Account</a>
                     </li>
-                    <li>
-                        <a href="#" title="Quick buy">Quick Buy</a>
+               
+                    
+
+                    <li id="loginItem" class="" data-section="myAccount">
+                        <a href="./LogIn.html">Login</a> 
                     </li>
-                    <li>
-                        <a href="#" title="Help - FAQ, how to buy online, guide and more" target="_blank">Help</a>
+                    <li id="logoutItem" class="" data-section="myAccount">
+                        <a href="./Products.html" title="Logout" onclick="Logout()" >Logout</a>
                     </li>
+
                 </ul>
             </section>
 
@@ -67,7 +72,7 @@
 
     <div id="filters" class="Filters fixedVisible">
         <div class="ResultCount" style="position: absolute; top: 0px;">
-            <a class="Clear" href=""> Clear All</a>
+            <a class="Clear" href="">Clear All</a>
             <div><span id="counter">  </span> Products</div>
 
             <div>
@@ -77,27 +82,28 @@
             </div>
         </div>
         <div id="categoryList" class="filterBreak">
-            <span>Category</span>
+            <span>Select Category</span>
         </div>
 
         <div id="nameFilter" class="nameFilter filterBreak">
 
-            <input type="text" id="nameSearch" class="floatRight" placeholder="Search Product">
+            <input type="text" id="nameSearch" class="floatRight" placeholder="Search product">
 
             <button class="floatRight" tabindex="0" onclick="filterProducts()">
-                <span class="header42"><img src="../pictures/searchIcon.svg" alt="סמל חיפוש"></span>
+                <span class="header42"><img src="../images/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
         <div id="priceRangeFilter" class="filterBreak">
             <div><span id="counter">  </span> Price:</div>
 
-            <input type="number" min=0 id="minPrice" class="priceInputText">
-            <span class="priceCurrency">₪</span>
 
             <input type="number" min=0 id="maxPrice" class="priceInputText">
             <span class="priceCurrency">₪</span>
+            <input type="number" min=0 id="minPrice" class="priceInputText">
+            <span class="priceCurrency">₪</span>
+
             <button onclick="filterProducts()">
-                <span><img src="../pictures/searchIcon.svg" alt="סמל חיפוש"></span>
+                <span><img src="../images/searchIcon.svg" alt="סמל חיפוש"></span>
             </button>
         </div>
     </div>

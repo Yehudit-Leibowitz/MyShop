@@ -1,0 +1,60 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="../css/ShoppingBag.css" rel="stylesheet" />
+    <script src="../js/ShoppingBag.js"></script>
+    <template id="temp-row">
+        <tr class="item-row">
+            <td class="imageColumn"><a rel="lightbox" href="#"><div class="image"></div></a></td>
+            <td class="descriptionColumn">
+                <div>
+                    <h3 class="itemName"></h3>
+                    <h6>
+                        <p class="itemNumber"></p>
+                    </h6>
+                </div>
+            </td>
+            <td class="availabilityColumn">
+                <div>במלאי</div>
+            </td>
+            <td class="totalColumn delete" >
+                <div class="expandoHeight" style="height: 99px;">
+                   <p class="price"></p>
+                   <a href="#" title="Click here to remove this item" class="Hide DeleteButton showText" id="delete">Remove item</a>
+                </div>
+            </td>
+        </tr>
+    </template>
+</head>
+<body>
+    <div class="cart">
+        <div id="title">
+            <h1>Shopping Cart</h1>
+
+            <p>
+                Your cart contains <span id="itemCount"></span> items and totals  <span id="totalAmount"></span>.
+            </p>
+
+          
+                <a class="nxbtn primary GoToCheckout TopLink checkout_transfer" href="#" onclick="placeOrder();
+    return false;">Place Order</a> <a class="shopmore" href="Products.html?fromShoppingBag=1">Continue Shopping</a> <div class="ClearBoth"></div>
+            </div>
+            <div class="cistGroup">
+                <table id="items" class="items">
+                    <thead>
+                        <tr>
+                            <th class="itemsColumn" colspan="2">items</th>
+                            <th>Availability</th>
+
+                            <th class="totalColumn">Total Price</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+        </div>
+   
+</body>
+</html>

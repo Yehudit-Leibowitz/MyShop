@@ -1,12 +1,12 @@
 const productList = addEventListener("load", async () => {
-    let categoriesIdArr = [];
-    let basketArr = JSON.parse(sessionStorage.getItem("basket")) || [];
-    sessionStorage.setItem("categoriesId", JSON.stringify(categoriesIdArr))
-    sessionStorage.setItem("basket", JSON.stringify(basketArr))
-    basketArr = JSON.parse(sessionStorage.getItem("basket")) || [];
-    document.querySelector("#ItemsCountText").innerHTML = basketArr.length
-    drawProducts();
+    let categoryIdArr = JSON.parse(sessionStorage.getItem("categoryIds")) || [];
+    sessionStorage.setItem("categoryIds", JSON.stringify(categoryIdArr))
+    drawProducts()
     showAllCategories();
+    let basketArr = JSON.parse(sessionStorage.getItem("basket")) || [];
+    sessionStorage.setItem("basket", JSON.stringify(basketArr))
+    document.querySelector("#ItemsCountText").innerHTML = basketArr.length
+    updateMenu();
 })
 
 const getDetailsFromForm = async () => {
@@ -22,11 +22,11 @@ const filterProducts = async () => {
     drawProducts()
 }
 const drawProducts = async () => {
-    const categoriesIdFromSession = JSON.parse(sessionStorage.getItem("categoriesId"))
-    console.log(categoriesIdFromSession)
+    const categoryIds1 = JSON.parse(sessionStorage.getItem("categoryIds"))
+    console.log(categoryIds1)
     let { nameSearch, minPrice, maxPrice } = await getDetailsFromForm()
     let url = `https://localhost:44379/api/products`
-    if (nameSearch || minPrice || maxPrice || categoriesIdFromSession) {
+    if (nameSearch || minPrice || maxPrice || categoryIds1) {
         url += '?'
         if (nameSearch != '')
             url += `&desc=${nameSearch}`
@@ -34,33 +34,33 @@ const drawProducts = async () => {
             url += `&minPrice=${minPrice}`
         if (maxPrice)
             url += `&maxPrice=${maxPrice}`
-        if (categoriesIdFromSession != []) {
-            for (let i = 0; i < categoriesIdFromSession.length; i++) {
-                url += `&categoryIds=${categoriesIdFromSession[i]}`
+        if (categoryIds1 != []) {
+            for (let i = 0; i < categoryIds1.length; i++) {
+                url += `&categoryIds=${categoryIds1[i]}`
             }
         }
     }
-    try {
-        const allProducts = await fetch(url, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            query: {
-                desc: nameSearch,
-                minPrice: minPrice,
-                maxPrice: maxPrice,
-                categoriesId: categoriesIdFromSession
-            }
-        });
+    try { 
+    const allProducts = await fetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        query: {
+            desc: nameSearch,
+            minPrice: minPrice,
+            maxPrice: maxPrice,
+            categoryIds: categoryIds1
+        }
+    });
         const dataProducts = await allProducts.json();
 
-        console.log('GET Data:', dataProducts)
+        //console.log('GET Data:', dataProducts)
         showAllProducts(dataProducts);
-    }
-    catch (error) {
-        alert("Something wrong, try again")
-    }
+}
+catch(error) {
+    alert("error")
+}
 }
 const showAllProducts = async (products) => {
     for (let i = 0; i < products.length; i++) {
@@ -69,13 +69,13 @@ const showAllProducts = async (products) => {
 }
 
 const showOneProduct = async (product) => {
-    let temp = document.getElementById("temp-card");
-    let cloneProduct = temp.content.cloneNode(true)
+    let tmp = document.getElementById("temp-card"); 
+    let cloneProduct = tmp.content.cloneNode(true)
     if (product.image)
-    cloneProduct.querySelector("img").src = "../pictures/" + product.image
+        cloneProduct.querySelector("img").src = "../images/" + product.image
     cloneProduct.querySelector("h1").textContent = product.productName
-    cloneProduct.querySelector(".price").innerText = product.price + '$'
-    cloneProduct.querySelector(".description").innerText = product.description
+    cloneProduct.querySelector(".price").innerText = product.price
+    cloneProduct.querySelector(".description").innerText = product.descriptions
     cloneProduct.querySelector("button").addEventListener('click', () => { addToCart(product) })
     document.getElementById("PoductList").appendChild(cloneProduct)
 }
@@ -87,14 +87,10 @@ const addToCart = (product) => {
         productsInbasket.push(product.productId)
         sessionStorage.setItem("basket", JSON.stringify(productsInbasket))
         document.querySelector("#ItemsCountText").innerHTML = productsInbasket.length
-        alert("Successfully added to cart")
-    }
+            }
     else {
-        alert("Unregistered user")
-        setTimeout(() => {
-            window.location.href = "../LogIn.html"
-        }, "3000");
-      
+        alert("please sign")
+        window.location.href = "../html/LogIn.html"
     }
 
 }
@@ -102,14 +98,14 @@ const addToCart = (product) => {
 
 const showAllCategories = async () => {
 
-    const ReceivedCategories = await fetch('https://localhost:44379/api/Categories', {
+    const allCategories1 = await fetch('https://localhost:44379/api/Categories', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json'
         },
 
     });
-    allCategories = await ReceivedCategories.json();
+    allCategories = await allCategories1.json();
     for (let i = 0; i < allCategories.length; i++) {
         showOneCategory(allCategories[i]);
 
@@ -117,8 +113,8 @@ const showAllCategories = async () => {
 }
 const showOneCategory = async (category) => {
 
-    let temp = document.getElementById("temp-category");
-    let cloneProduct = temp.content.cloneNode(true)
+    let tmp = document.getElementById("temp-category");
+    let cloneProduct = tmp.content.cloneNode(true)
 
     cloneProduct.querySelector(".OptionName").textContent = category.categoryName
     cloneProduct.querySelector(".opt").addEventListener('change', () => { filterCategory(category) })
@@ -126,11 +122,22 @@ const showOneCategory = async (category) => {
 }
 
 const filterCategory = (category) => {
-    let categories = JSON.parse(sessionStorage.getItem("categoriesId"))
-    let a = categories.indexOf(category.categoryId
-)
+    let categories = JSON.parse(sessionStorage.getItem("categoryIds"))
+    let a = categories.indexOf(category.categoryId)
     a == -1 ? categories.push(category.categoryId) : categories.splice(a, 1)
-    sessionStorage.setItem("categoriesId", JSON.stringify(categories))
+    sessionStorage.setItem("categoryIds", JSON.stringify(categories))
+    console.log(categories)
     drawProducts()
 }
 
+const Logout = () => {
+    sessionStorage.removeItem("user");
+    let productsToRemove = []
+    sessionStorage.setItem("basket", JSON.stringify(productsToRemove))
+}
+
+const updateMenu = () => {
+    const isLoggedIn = sessionStorage.getItem('user') !== null;
+    document.getElementById('loginItem').style.display = isLoggedIn ? 'none' : 'block';
+    document.getElementById('logoutItem').style.display = isLoggedIn ? 'block' : 'none';
+}

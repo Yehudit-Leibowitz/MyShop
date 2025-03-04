@@ -12,6 +12,6 @@ namespace Entity;
     public string Referer { get; set; }
     public string UserAgent { get; set; }
     public DateTime? RecordDate { get; set; }
-    public int? UserId { get; set; }
+   //public int? UserId { get; set; }
 }
 

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using DTO;
 using Entity;
+using service;
 
 namespace MyShop
 
@@ -21,6 +22,8 @@ namespace MyShop
             CreateMap<OrderDTO,Order > ();
             CreateMap<Order,AddOrderDTO>();
             CreateMap<Product, ProductDTO>();
+            
+
         }
     }
 }

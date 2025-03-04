@@ -4,19 +4,19 @@ using Microsoft.AspNetCore.Http;
 using service;
 using System.Threading.Tasks;
 
-namespace MyShop.Middelware
+namespace MyShop
 {
-   
+
     public class RatingMiddleware
     {
         private readonly RequestDelegate _next;
-      
-        public RatingMiddleware(RequestDelegate next )
+
+        public RatingMiddleware(RequestDelegate next)
         {
             _next = next;
         }
 
-        public Task Invoke(HttpContext httpContext, IRatingService ratingService)
+        public async Task Invoke(HttpContext httpContext, IRatingService ratingService)
         {
 
             Rating newRating = new()
@@ -27,11 +27,11 @@ namespace MyShop.Middelware
                 Referer = httpContext.Request.Headers.Referer,
                 UserAgent = httpContext.Request.Headers.UserAgent,
                 RecordDate = DateTime.Now,
-                
+
             };
 
-            ratingService.AddRating(newRating);
-            return _next(httpContext);
+            await ratingService.AddRating(newRating);
+            await _next(httpContext);
         }
     }
 

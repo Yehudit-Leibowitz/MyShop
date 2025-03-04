@@ -42,7 +42,7 @@ namespace MyShop.Controllers
         public async Task<ActionResult<GetUserDTO>> Register([FromBody] RegisterUserDTO user)
         {
             User newUser = await userService.AddUser(_mapper.Map<RegisterUserDTO, User>(user));
-            return newUser != null ? Ok(_mapper.Map<User, GetUserDTO>(newUser)) : Unauthorized();
+            return newUser != null ? Ok(_mapper.Map<User, GetUserDTO>(newUser)) : BadRequest();
 
         }
 
@@ -66,7 +66,7 @@ namespace MyShop.Controllers
             _logger.LogCritical($"Login attemped with Mail:{userName} and password :{password}");
             User userLogin = await userService.LogIn(userName, password);
             return (userLogin == null)?
-                 NoContent():
+                 Unauthorized():
            Ok(_mapper.Map<User, GetUserDTO>(userLogin));
            
             

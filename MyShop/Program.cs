@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using MyShop.Middelware;
+using Microsoft.Extensions.Configuration;
+using MyShop;
 using NLog.Web;
-using PresidentsApp.Middlewares;
 using Repository;
 using service;
 
@@ -26,13 +26,20 @@ builder.Services.AddScoped<IProductService, ProductService>();
 builder.Services.AddScoped<IRatingRepository, RatingRepository>();
 builder.Services.AddScoped<IRatingService, RatingService>();
 
-builder.Services.AddDbContext<ApiDbToCodeContext>(options => options.UseSqlServer(
-    "Server=SRV2\\PUPILS;Database=api_db_to_code;Trusted_Connection=True;TrustServerCertificate=True"));
-//(options => options.UseSqlServer(builder.Configuration.GetConnectionString("Seminar")));
+
+
+//builder.Services.AddDbContext<ApiDbToCodeContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+builder.Services.AddDbContext<ApiDbToCodeContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("Seminar")));
+
 builder.Host.UseNLog();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddMemoryCache();
 
 var app = builder.Build();
 
@@ -42,15 +49,9 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-app.UseRatingMiddleware();
 app.UseHttpsRedirection();
-
 app.UseStaticFiles();
-
-
-app.UseErrorHandlingMiddleware();
 app.UseAuthorization();
-
+app.UseRatingMiddleware();
 app.MapControllers();
-
 app.Run();
