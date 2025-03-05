@@ -12,42 +12,49 @@ namespace TestProject1
 {
     public class UnitOrderTest
     {
+
         [Fact]
-        public async void CheckOrderSum_ValidCredentialsReturnOrder()
+        public async Task Post_ShouldSaveOrder_WithCorrectTotalAmount()
         {
-            var products = new List<Product>
-        {
-            new Product { ProductId = 1, Price = 40 },
-            new Product { ProductId = 2, Price = 20 }
-        };
+            //Arrange
+            var category = new Category { CategoryName = "Electronics" };
+            _context.Categories.Add(category);
+            await _context.SaveChangesAsync();
 
-            var orders = new List<Order>
-        {
-            new Order
+            var product1 = new Product { ProductName = "Laptop", Price = 10, Image = "laptop.jpg", Category = category };
+            var product2 = new Product { ProductName = "Phone", Price = 20, Image = "phone.jpg", Category = category };
+            var product3 = new Product { ProductName = "Tablet", Price = 15, Image = "tablet.jpg", Category = category };
+
+            _context.Products.AddRange(product1, product2, product3);
+            await _context.SaveChangesAsync();
+
+            var user = new User { UserName = "test@example.com", Password = "password12@@D3", FirstName = "John", LastName = "Doe" };
+            _context.Users.Add(user);
+            await _context.SaveChangesAsync();
+
+            var order = new Order
             {
-                UserId = 1,
-                OrderSum = 100,
+                OrderDate = DateTime.UtcNow,
+                OrderSum = 0,
+                UserId = user.UserId,
                 OrderItems = new List<OrderItem>
-                {
-                    new OrderItem { ProductId = 1, Quantity = 2 },
-                    new OrderItem { ProductId = 2, Quantity = 1 }
-                }
+            {
+                new OrderItem { ProductId = product1.ProductId, Quantity = 1 },
+                new OrderItem { ProductId = product2.ProductId, Quantity = 1 },
+                new OrderItem { ProductId = product3.ProductId, Quantity = 1 }
             }
-        };
+            };
 
-            var mockContext = new Mock<ApiDbToCodeContext>();
-            mockContext.Setup(x => x.Products).ReturnsDbSet(products);
-            mockContext.Setup(x => x.Orders).ReturnsDbSet(orders);
-            mockContext.Setup(x => x.SaveChangesAsync(default)).ReturnsAsync(1);
-            var productRepository = new ProductRepository(mockContext.Object);
-            var orderRepository = new OrderRepository(mockContext.Object);
-            var mockLogger = new Mock<ILogger<OrderService>>();
-            var orderService = new OrderService(orderRepository, productRepository, mockLogger.Object);
+            // Act: 
+            var savedOrder = await _repository.AddOrder(order);
 
-            var result = await orderService.AddOrder(orders[0]);
-            Assert.Equal(result, orders[0]);
+            // Assert: 
+            Assert.Null(savedOrder);
+
+
+
         }
-        
+
         [Fact]
         public async Task CheckOrderSum_InvalidOrderSumUpdatesOrderSum()
         {

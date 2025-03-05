@@ -32,7 +32,7 @@
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Entity\Entity.csproj" />
     <ProjectReference Include="..\Repository\Repository.csproj" />
-    <ProjectReference Include="..\service\service.csproj" />
+    <ProjectReference Include="..\service\Service.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -54,8 +54,7 @@ const drawProducts = async () => {
         }
     });
         const dataProducts = await allProducts.json();
-
-        //console.log('GET Data:', dataProducts)
+        
         showAllProducts(dataProducts);
 }
 catch(error) {
@@ -74,8 +73,9 @@ const showOneProduct = async (product) => {
     if (product.image)
         cloneProduct.querySelector("img").src = "../images/" + product.image
     cloneProduct.querySelector("h1").textContent = product.productName
-    cloneProduct.querySelector(".price").innerText = product.price
-    cloneProduct.querySelector(".description").innerText = product.descriptions
+    cloneProduct.querySelector(".price").innerText = product.price 
+    cloneProduct.querySelector(".description").innerText = product.description;
+
     cloneProduct.querySelector("button").addEventListener('click', () => { addToCart(product) })
     document.getElementById("PoductList").appendChild(cloneProduct)
 }

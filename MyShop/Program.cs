@@ -1,7 +1,9 @@
+using Microsoft.AspNetCore.DataProtection.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using MyShop;
+using MyShop.Middleware;
 using NLog.Web;
+using PresidentsApp.Middlewares;
 using Repository;
 using service;
 
@@ -28,18 +30,22 @@ builder.Services.AddScoped<IRatingService, RatingService>();
 
 
 
-//builder.Services.AddDbContext<ApiDbToCodeContext>(options =>
-//    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
 builder.Services.AddDbContext<ApiDbToCodeContext>(options =>
-    options.UseSqlServer(builder.Configuration.GetConnectionString("Seminar")));
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+//builder.Services.AddDbContext<ApiDbToCodeContext>(options =>
+//    options.UseSqlServer(builder.Configuration.GetConnectionString("Seminar")));
 
 builder.Host.UseNLog();
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddMemoryCache();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+
 
 var app = builder.Build();
 
@@ -49,6 +55,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseErrorHandlingMiddleware();
 app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseAuthorization();

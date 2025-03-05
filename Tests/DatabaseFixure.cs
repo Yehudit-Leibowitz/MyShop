@@ -6,7 +6,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-#region
 
 namespace Tests
 {
@@ -16,7 +15,8 @@ namespace Tests
         public DatabaseFixure()
         {
             var options = new DbContextOptionsBuilder<ApiDbToCodeContext>()
-                .UseSqlServer(Server = SRV2\\PUPILS; Database =ProjectTestDB; Trusted_Connection = True; TrustServerCertificate = True
+                .UseSqlServer("Server=DESKTOP-58UFOBM;Database=TestDB;User Id=sa;Password=9553595535;TrustServerCertificate=True;")
+                .Options;
             Context = new ApiDbToCodeContext(options);
             Context.Database.EnsureCreated();
         }

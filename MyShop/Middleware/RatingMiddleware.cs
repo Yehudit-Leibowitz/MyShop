@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Http;
 using service;
 using System.Threading.Tasks;
 
-namespace MyShop
+namespace MyShop.Middleware
 {
 
     public class RatingMiddleware
